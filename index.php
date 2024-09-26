@@ -1,3 +1,12 @@
+<?php
+    include "koneksi.php";
+
+    // read
+    $query = "SELECT * FROM tabel_siswa";
+    $sql = mysqli_query($koneksi, $query);
+    $no = 0;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +45,7 @@
                 CRUD <cite title="Source Title">Create Read Update Delete</cite>
             </figcaption>
         </figure>
-        <a href="kelolah.html" type="button" class="btn btn-primary mb-3">
+        <a href="kelolah.php" type="button" class="btn btn-primary mb-3">
             <i class="fa fa-plus"></i>
             Tambah data
         </a>
@@ -54,42 +63,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                        while($result = mysqli_fetch_assoc($sql)) :
+                    ?>
                     <tr>
-                        <td class="text-center">1.</td>
-                        <td>112233</td>
-                        <td>Alex Pepuho</td>
-                        <td>Laki-laki</td>
+                        <td class="text-center"><?= ++$no?>.</td>
+                        <td><?= $result["nisn"]?></td>
+                        <td><?= $result["nama_siswa"]?></td>
+                        <td><?= $result["jenis_kelamin"]?></td>
                         <td>
-                            <img src="./img/img1.jpg" width="150px">
+                            <img src="./img/<?= $result["foto_siswa"]?>" width="150px">
                         </td>
-                        <td>Kampung Asei Kecil</td>
+                        <td><?= $result["alamat"]?></td>
                         <td>
-                            <a href="kelolah.html" type="button" class="btn btn-success btn-sm">
+                            <a href="kelolah.php?ubah=<?= $result["id_siswa"]?>" type="button"
+                                class="btn btn-success btn-sm">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <button type="button" class="btn btn-danger btn-sm">
+                            <a href="proses.php?hapus=<?= $result["id_siswa"]?>" type="button"
+                                class="btn btn-danger btn-sm">
                                 <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">2.</td>
-                        <td>112234</td>
-                        <td>Bella Deda</td>
-                        <td>Perempuan</td>
-                        <td>
-                            <img src="./img/img3.jpg" width="150px">
-                        </td>
-                        <td>Kampung Asei Besar</td>
-                        <td>
-                            <a href="kelolah.html" type="button" class="btn btn-success btn-sm">
-                                <i class="fa fa-pencil"></i>
                             </a>
-                            <button type="button" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash"></i>
-                            </button>
                         </td>
                     </tr>
+                    <?php 
+                        endwhile;
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -97,8 +96,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
